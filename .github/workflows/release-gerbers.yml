@@ -32,9 +32,30 @@ jobs:
       - name: Install KiCad CLI (nightly)
         run: |
           set -euo pipefail
-          sudo add-apt-repository --yes ppa:kicad/kicad-dev-nightly
-          sudo apt-get update
-          sudo apt-get install --yes kicad-nightly
+
+          retry() {
+            local attempts="$1"
+            shift
+            local n=1
+            while true; do
+              if "$@"; then
+                return 0
+              fi
+
+              if [[ "$n" -ge "$attempts" ]]; then
+                echo "Command failed after ${attempts} attempts: $*" >&2
+                return 1
+              fi
+
+              echo "Attempt ${n}/${attempts} failed, retrying in 15s: $*" >&2
+              n=$((n + 1))
+              sleep 15
+            done
+          }
+
+          retry 3 sudo add-apt-repository --yes ppa:kicad/kicad-dev-nightly
+          retry 3 sudo apt-get update
+          retry 3 sudo apt-get install --yes kicad-nightly
 
       - name: Resolve kicad-cli path
         shell: bash
