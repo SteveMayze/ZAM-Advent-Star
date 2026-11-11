@@ -1,0 +1,4 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "ZAM-Parts") (type "KiCad") (uri "${MY_LIB}/ZAM-Parts.pretty") (options "") (descr ""))
+)

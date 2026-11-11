@@ -1,0 +1,26 @@
+{
+  "defaults": {
+    "gerber": {
+      "include_layers": [
+        "F.Cu",
+        "B.Cu",
+        "F.SilkS",
+        "B.SilkS",
+        "F.Mask",
+        "B.Mask",
+        "Edge.Cuts"
+      ],
+      "additional_files": []
+    }
+  },
+  "projects": [
+    {
+      "id": "ZAM-AdventStar-SixPoint",
+      "path": "kicad/ZAM-AdventStar-SixPoint/ZAM-AdventStar-SixPoint.kicad_pro"
+    },
+    {
+      "id": "AdventStar-Small",
+      "path": "./kicad/ZAM-AdventStar-Small/ZAM-AdventStar-Small.kicad_pro"
+    }
+  ]
+}
