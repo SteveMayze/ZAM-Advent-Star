@@ -29,13 +29,34 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Repair Ubuntu package sources
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # GitHub-hosted runners sometimes ship a broken apt mirror configuration that
+          # points at azure.archive.ubuntu.com; that hostname is intermittently
+          # unreachable, causing the install to stall/fail even though the requested
+          # package is available from the canonical Ubuntu mirrors.
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            echo "Removing custom apt mirror override to avoid Azure Ubuntu mirror failures."
+            sudo rm -f /etc/apt/apt-mirrors.txt
+          fi
+
+          sudo tee /etc/apt/sources.list >/dev/null <<'EOF'
+          deb http://archive.ubuntu.com/ubuntu noble main universe multiverse
+          deb http://archive.ubuntu.com/ubuntu noble-updates main universe multiverse
+          deb http://archive.ubuntu.com/ubuntu noble-backports main universe multiverse
+          deb http://security.ubuntu.com/ubuntu noble-security main universe multiverse
+          EOF
+
       - name: Install KiCad CLI
         run: |
           set -euo pipefail
 
-          # The Launchpad nightly PPA is unreliable in GitHub-hosted runners because it
-          # frequently fails DNS/Launchpad connectivity. Use the Ubuntu package repo,
-          # which is much more stable for CI and still provides kicad-cli for gerber export.
+          # Prefer the stable Ubuntu package stream instead of the Launchpad nightly PPA.
+          # This is the supported, repeatable path for GitHub-hosted runners and still
+          # provides the kicad-cli binary required for Gerber export.
           sudo apt-get update
           sudo apt-get install --yes --no-install-recommends kicad
 
