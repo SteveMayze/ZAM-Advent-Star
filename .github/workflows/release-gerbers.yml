@@ -29,54 +29,42 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Repair Ubuntu package sources
+      - name: Install KiCad CLI from official stable binary
         shell: bash
         run: |
           set -euo pipefail
 
-          # GitHub-hosted runners sometimes ship a stale apt mirror override that points
-          # to azure.archive.ubuntu.com, which can fail DNS and stall package installs.
-          # Remove that mirror file before falling back to the canonical Ubuntu mirrors.
-          if [ -f /etc/apt/apt-mirrors.txt ]; then
-            echo "Removing custom apt mirror override to avoid Azure Ubuntu mirror failures."
-            sudo rm -f /etc/apt/apt-mirrors.txt
+          # The GitHub-hosted Ubuntu runner image is not reliable for apt-based KiCad
+          # installs because the runner's custom mirror configuration can still point at
+          # a broken mirror even after repository fixes. Use KiCad's own stable binary
+          # distribution instead of the OS package manager to keep the workflow reliable.
+          mkdir -p /tmp/kicad
+          cd /tmp/kicad
+
+          URL="https://downloads.kicad.org/kicad/linux/explore/stable"
+          echo "Fetching KiCad stable download metadata from $URL"
+          curl -fsSL "$URL" -o /tmp/kicad-stable.html
+
+          # Prefer the full stable AppImage tarball published by KiCad.
+          APPIMAGE_URL="$(grep -oE 'https://[^\" ]+kicad-[0-9]+\.[0-9]+\.[0-9]+.*\.AppImage\.tar' /tmp/kicad-stable.html | head -n 1 || true)"
+          if [ -z "$APPIMAGE_URL" ]; then
+            echo "Unable to determine official KiCad stable AppImage URL." >&2
+            exit 1
           fi
 
-          # Ensure the base Ubuntu repositories are explicit and not relying on a broken
-          # mirror override from the runner image.
-          sudo tee /etc/apt/sources.list >/dev/null <<'EOF'
-          deb http://archive.ubuntu.com/ubuntu noble main universe multiverse
-          deb http://archive.ubuntu.com/ubuntu noble-updates main universe multiverse
-          deb http://archive.ubuntu.com/ubuntu noble-backports main universe multiverse
-          deb http://security.ubuntu.com/ubuntu noble-security main universe multiverse
-          EOF
+          echo "Downloading KiCad stable binary from $APPIMAGE_URL"
+          curl -fL --retry 3 --retry-delay 5 "$APPIMAGE_URL" -o /tmp/kicad-stable.tar
+          tar -xf /tmp/kicad-stable.tar -C /tmp/kicad --strip-components=1
 
-      - name: Install KiCad CLI
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          # Try the official stable KiCad PPA first because it is the canonical stable
-          # release path for kicad-cli. If Launchpad is unavailable, fall back to the
-          # Ubuntu archive package, which is more reliable in GitHub-hosted runners.
-          sudo apt-get update
-
-          if sudo apt-get install --yes software-properties-common >/dev/null 2>&1; then
-            if sudo add-apt-repository --yes ppa:kicad/kicad >/dev/null 2>&1; then
-              sudo apt-get update
-              if sudo apt-get install --yes --no-install-recommends kicad-cli >/dev/null 2>&1; then
-                exit 0
-              fi
-            fi
+          CLI_PATH="$(find /tmp/kicad -type f \( -name kicad-cli -o -name kicad-cli.exe \) | head -n 1)"
+          if [ -z "$CLI_PATH" ]; then
+            echo "kicad-cli not found in downloaded KiCad bundle." >&2
+            exit 1
           fi
 
-          # Fallback: install the distro package that includes the CLI while avoiding
-          # the nightly Launchpad route entirely.
-          sudo apt-get install --yes --no-install-recommends kicad
-
-          if ! command -v kicad-cli >/dev/null 2>&1; then
-            sudo apt-get install --yes --no-install-recommends kicad-cli
-          fi
+          echo "KICAD_CLI=$CLI_PATH" >> "$GITHUB_ENV"
+          echo "Using KiCad CLI at: $CLI_PATH"
+          "$CLI_PATH" --version
 
       - name: Resolve kicad-cli path
         shell: bash
