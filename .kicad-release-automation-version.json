@@ -1,30 +1,30 @@
 {
   "schema_version": 2,
-  "installed_at": "2026-11-11T17:55:23Z",
+  "installed_at": "2026-11-11T18:24:51Z",
   "module_repo": "SteveMayze/kicad-release-automation-module",
   "module_repo_url": "git@github.com:SteveMayze/kicad-release-automation-module.git",
-  "module_version": "module-v0.2.1-8-gc6e2063-dirty",
-  "installed_version": "module-v0.2.1-8-gc6e2063-dirty",
+  "module_version": "module-v0.2.1-10-gfa96ced-dirty",
+  "installed_version": "module-v0.2.1-10-gfa96ced-dirty",
   "managed_files": {
     "scripts/generate_release_artifacts.py": {
-      "version": "module-v0.2.1-8-gc6e2063-dirty",
+      "version": "module-v0.2.1-10-gfa96ced-dirty",
       "sha256": "54262bd81942c880f4e90539ad3123fa9dcd7fc88442972c75330bd962cab000",
-      "installed_at": "2026-11-11T17:55:23Z"
+      "installed_at": "2026-11-11T18:24:51Z"
     },
     "scripts/check_release_automation_update.py": {
-      "version": "module-v0.2.1-8-gc6e2063-dirty",
+      "version": "module-v0.2.1-10-gfa96ced-dirty",
       "sha256": "ebe9eddd8b30eaf40bd61fc79846331d42642aa5b7cd2262622ed64bdb15b0c1",
-      "installed_at": "2026-11-11T17:55:23Z"
+      "installed_at": "2026-11-11T18:24:51Z"
     },
     "scripts/find_kicad_cli.py": {
-      "version": "module-v0.2.1-8-gc6e2063-dirty",
+      "version": "module-v0.2.1-10-gfa96ced-dirty",
       "sha256": "f4d6333b1d2bb6b96d42f057a4e454f971024e1c392a064e7c06c5aa90d69041",
-      "installed_at": "2026-11-11T17:55:23Z"
+      "installed_at": "2026-11-11T18:24:51Z"
     },
     ".github/workflows/release-gerbers.yml": {
-      "version": "module-v0.2.1-8-gc6e2063-dirty",
-      "sha256": "7532087f13c7bfb6a3d6285d81fc232014f178d6bf30c812e6b81f6db564d43f",
-      "installed_at": "2026-11-11T17:55:23Z"
+      "version": "module-v0.2.1-10-gfa96ced-dirty",
+      "sha256": "efb4ae1ff762d424b5c9167f89c0b0222c8df9aff3cad55dc86f81e124c12f04",
+      "installed_at": "2026-11-11T18:24:51Z"
     }
   }
 }
