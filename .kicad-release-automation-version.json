@@ -1,30 +1,40 @@
 {
   "schema_version": 2,
-  "installed_at": "2026-11-11T18:40:38Z",
+  "installed_at": "2026-11-11T18:53:39Z",
   "module_repo": "SteveMayze/kicad-release-automation-module",
   "module_repo_url": "git@github.com:SteveMayze/kicad-release-automation-module.git",
-  "module_version": "module-v0.2.1-12-gde5ccc2",
-  "installed_version": "module-v0.2.1-12-gde5ccc2",
+  "module_version": "module-v0.2.1-13-g2abe492",
+  "installed_version": "module-v0.2.1-13-g2abe492",
   "managed_files": {
     "scripts/generate_release_artifacts.py": {
-      "version": "module-v0.2.1-12-gde5ccc2",
+      "version": "module-v0.2.1-13-g2abe492",
       "sha256": "394e1c111268cd083f70a4ebfb948819dfa5e4bb3821644924789c6737be3401",
-      "installed_at": "2026-11-11T18:40:38Z"
+      "installed_at": "2026-11-11T18:53:39Z"
     },
     "scripts/check_release_automation_update.py": {
-      "version": "module-v0.2.1-12-gde5ccc2",
+      "version": "module-v0.2.1-13-g2abe492",
       "sha256": "ebe9eddd8b30eaf40bd61fc79846331d42642aa5b7cd2262622ed64bdb15b0c1",
-      "installed_at": "2026-11-11T18:40:38Z"
+      "installed_at": "2026-11-11T18:53:39Z"
     },
     "scripts/find_kicad_cli.py": {
-      "version": "module-v0.2.1-12-gde5ccc2",
+      "version": "module-v0.2.1-13-g2abe492",
       "sha256": "f4d6333b1d2bb6b96d42f057a4e454f971024e1c392a064e7c06c5aa90d69041",
-      "installed_at": "2026-11-11T18:40:38Z"
+      "installed_at": "2026-11-11T18:53:39Z"
+    },
+    "scripts/setup_kicad_cli_container.sh": {
+      "version": "module-v0.2.1-13-g2abe492",
+      "sha256": "536076671e429ece87500564a2b3dafef5cd9fcbfb87d7f239fe6de115ceba0c",
+      "installed_at": "2026-11-11T18:53:39Z"
+    },
+    "scripts/package_release_artifacts.sh": {
+      "version": "module-v0.2.1-13-g2abe492",
+      "sha256": "9ea85c99f0405d466ae18fb3711cf2690acc6a6248af82cd5d56cf3cc24efaaa",
+      "installed_at": "2026-11-11T18:53:39Z"
     },
     ".github/workflows/release-gerbers.yml": {
-      "version": "module-v0.2.1-12-gde5ccc2",
-      "sha256": "f4959ed1f0698d4bbf044db7918975503e4665c5fa26a2760a70b10d6fbbabfd",
-      "installed_at": "2026-11-11T18:40:38Z"
+      "version": "module-v0.2.1-13-g2abe492",
+      "sha256": "b6c6fe62a1de605e65c56011d695b071701111266f0714f429016dc441994906",
+      "installed_at": "2026-11-11T18:53:39Z"
     }
   }
 }
