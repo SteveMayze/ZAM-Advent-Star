@@ -46,4 +46,4 @@ fp-info-cache
 .venv/
 
 gerber/
-
+.release-out/
